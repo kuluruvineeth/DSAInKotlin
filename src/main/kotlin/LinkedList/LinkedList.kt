@@ -1,11 +1,29 @@
 package LinkedList
 
-class LinkedList<T> : Iterable<T>, Collection<T>, MutableIterable<T> {
+class LinkedList<T> : Iterable<T>, Collection<T>, MutableIterable<T>, MutableCollection<T> {
 
     private var head: Node<T>? = null
     private var tail: Node<T>? = null
     override var size = 0
         private set
+
+    override fun clear() {
+        head = null
+        tail = null
+        size = 0
+    }
+
+    override fun addAll(elements: Collection<T>): Boolean {
+        for(element in elements){
+            append(element)
+        }
+        return true
+    }
+
+    override fun add(element: T): Boolean {
+        append(element)
+        return true
+    }
 
     override fun containsAll(elements: Collection<T>): Boolean {
         for(searched in elements){
@@ -128,6 +146,40 @@ class LinkedList<T> : Iterable<T>, Collection<T>, MutableIterable<T> {
 
     override fun iterator(): MutableIterator<T> {
         return LinkedListIterator(this)
+    }
+
+    override fun retainAll(elements: Collection<T>): Boolean {
+        var result = false
+        val iterator = this.iterator()
+        while(iterator.hasNext()){
+            val item = iterator.next()
+            if(!elements.contains(item)){
+                iterator.remove()
+                result = true
+            }
+        }
+        return result
+    }
+
+    override fun removeAll(elements: Collection<T>): Boolean {
+        var result = false
+        for(item in elements){
+            result = remove(item) || result
+        }
+        return result
+    }
+
+    override fun remove(element: T): Boolean {
+        val iterator = iterator()
+
+        while(iterator.hasNext()){
+            val item = iterator.next()
+            if(item==element){
+                iterator.remove()
+                return true
+            }
+        }
+        return false
     }
 
     override fun toString(): String {
