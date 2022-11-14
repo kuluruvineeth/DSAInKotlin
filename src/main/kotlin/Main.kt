@@ -56,4 +56,39 @@ fun main(args: Array<String>) {
         for(item in listIterable){
                 println("Double: ${item * 2}")
         }
+
+        println("Removing elements")
+        val listCollection: MutableCollection<Int> = LinkedList<Int>()
+        listCollection.add(3)
+        listCollection.add(2)
+        listCollection.add(1)
+
+        println(listCollection)
+        listCollection.remove(1)
+        println(listCollection)
+
+        println("Retaining elements")
+        val listCollection1: MutableCollection<Int> = LinkedList<Int>()
+        listCollection1.add(3)
+        listCollection1.add(2)
+        listCollection1.add(1)
+        listCollection1.add(4)
+        listCollection1.add(5)
+
+        println(listCollection1)
+        listCollection1.retainAll(listOf(3,4,5))
+        println(list)
+
+        println("Remove all elements")
+        val listCollection2: MutableCollection<Int> = LinkedList<Int>()
+        listCollection2.add(3)
+        listCollection2.add(2)
+        listCollection2.add(1)
+        listCollection2.add(4)
+        listCollection2.add(5)
+
+        println(listCollection2)
+        listCollection2.removeAll(listOf(3,4,5))
+        println(listCollection2)
+
 }
