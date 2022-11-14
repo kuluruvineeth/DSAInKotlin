@@ -1,6 +1,6 @@
 package LinkedList
 
-class LinkedList<T> : Iterable<T>, Collection<T> {
+class LinkedList<T> : Iterable<T>, Collection<T>, MutableIterable<T> {
 
     private var head: Node<T>? = null
     private var tail: Node<T>? = null
@@ -126,7 +126,7 @@ class LinkedList<T> : Iterable<T>, Collection<T> {
         return result
     }
 
-    override fun iterator(): Iterator<T> {
+    override fun iterator(): MutableIterator<T> {
         return LinkedListIterator(this)
     }
 
@@ -141,7 +141,7 @@ class LinkedList<T> : Iterable<T>, Collection<T> {
 
 class LinkedListIterator<T>(
     private val list: LinkedList<T>
-) : Iterator<T>{
+) : Iterator<T>,MutableIterator<T>{
     private var index = 0
     private var lastNode: Node<T>? = null
     override fun hasNext(): Boolean {
@@ -157,6 +157,17 @@ class LinkedListIterator<T>(
         }
         index++
         return lastNode!!.value
+    }
+
+    override fun remove() {
+        if(index==1){
+            list.pop()
+        }else{
+            val prevNode = list.nodeAt(index-2) ?: return
+            list.removeAfter(prevNode)
+            lastNode = prevNode
+        }
+        index--
     }
 
 }
